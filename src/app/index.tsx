@@ -114,7 +114,9 @@ export default function Game() {
     }
     return (
       <Pressable key={move} onPress={() => jumpTo(move)}>
-        <Text style={styles.move}>{description}</Text>
+        <Text style={[styles.move, move === currentMove && styles.currentMove]}>
+          {description}
+        </Text>
       </Pressable>
     );
   });
@@ -160,5 +162,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#2563eb",
     paddingVertical: 4,
+  },
+  currentMove: {
+    fontWeight: "bold",
   },
 });
