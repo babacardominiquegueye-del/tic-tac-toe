@@ -62,21 +62,20 @@ function Board({
   return (
     <View>
       <Text style={styles.status}>{status}</Text>
-      <View style={styles.boardRow}>
-        <Square value={squares[0]} onPress={() => handlePress(0)} />
-        <Square value={squares[1]} onPress={() => handlePress(1)} />
-        <Square value={squares[2]} onPress={() => handlePress(2)} />
-      </View>
-      <View style={styles.boardRow}>
-        <Square value={squares[3]} onPress={() => handlePress(3)} />
-        <Square value={squares[4]} onPress={() => handlePress(4)} />
-        <Square value={squares[5]} onPress={() => handlePress(5)} />
-      </View>
-      <View style={styles.boardRow}>
-        <Square value={squares[6]} onPress={() => handlePress(6)} />
-        <Square value={squares[7]} onPress={() => handlePress(7)} />
-        <Square value={squares[8]} onPress={() => handlePress(8)} />
-      </View>
+      {Array.from({ length: 3 }).map((_, row) => (
+        <View key={row} style={styles.boardRow}>
+          {Array.from({ length: 3 }).map((_, col) => {
+            const i = row * 3 + col;
+            return (
+              <Square
+                key={i}
+                value={squares[i]}
+                onPress={() => handlePress(i)}
+              />
+            );
+          })}
+        </View>
+      ))}
     </View>
   );
 }
