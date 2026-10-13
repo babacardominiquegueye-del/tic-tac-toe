@@ -61,9 +61,12 @@ function Board({
 
   const winningLine = calculateWinner(squares);
   const winner = winningLine ? squares[winningLine[0]] : null;
+  const isDraw = !winner && squares.every((value) => value !== null);
   const status = winner
     ? `Winner: ${winner}`
-    : `Next player: ${xIsNext ? "X" : "O"}`;
+    : isDraw
+      ? "Draw"
+      : `Next player: ${xIsNext ? "X" : "O"}`;
 
   return (
     <View>
