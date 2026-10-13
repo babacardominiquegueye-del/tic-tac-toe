@@ -5,19 +5,24 @@ type SquareValue = "X" | "O" | null;
 
 function Square({
   value,
+  highlight,
   onPress,
 }: {
   value: SquareValue;
+  highlight?: boolean;
   onPress: () => void;
 }) {
   return (
-    <Pressable style={styles.square} onPress={onPress}>
+    <Pressable
+      style={[styles.square, highlight && styles.highlight]}
+      onPress={onPress}
+    >
       <Text style={styles.squareText}>{value}</Text>
     </Pressable>
   );
 }
 
-function calculateWinner(squares: SquareValue[]): SquareValue {
+function calculateWinner(squares: SquareValue[]): number[] | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -30,7 +35,7 @@ function calculateWinner(squares: SquareValue[]): SquareValue {
   ];
   for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [a, b, c];
     }
   }
   return null;
@@ -46,7 +51,7 @@ function Board({
   onPlay: (nextSquares: SquareValue[]) => void;
 }) {
   function handlePress(i: number) {
-    if (squares[i] || calculateWinner(squares)) {
+    if (squares[i] || winningLine) {
       return;
     }
     const nextSquares = squares.slice();
@@ -54,7 +59,8 @@ function Board({
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
+  const winningLine = calculateWinner(squares);
+  const winner = winningLine ? squares[winningLine[0]] : null;
   const status = winner
     ? `Winner: ${winner}`
     : `Next player: ${xIsNext ? "X" : "O"}`;
@@ -70,6 +76,7 @@ function Board({
               <Square
                 key={i}
                 value={squares[i]}
+                highlight={winningLine?.includes(i)}
                 onPress={() => handlePress(i)}
               />
             );
@@ -161,6 +168,9 @@ const styles = StyleSheet.create({
   },
   squareText: {
     fontSize: 28,
+  },
+  highlight: {
+    backgroundColor: "#fde68a",
   },
   gameInfo: {
     marginTop: 16,
