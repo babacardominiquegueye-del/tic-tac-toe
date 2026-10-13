@@ -71,21 +71,23 @@ function Board({
   return (
     <View>
       <Text style={styles.status}>{status}</Text>
-      {Array.from({ length: 3 }).map((_, row) => (
-        <View key={row} style={styles.boardRow}>
-          {Array.from({ length: 3 }).map((_, col) => {
-            const i = row * 3 + col;
-            return (
-              <Square
-                key={i}
-                value={squares[i]}
-                highlight={winningLine?.includes(i)}
-                onPress={() => handlePress(i)}
-              />
-            );
-          })}
-        </View>
-      ))}
+      <View style={styles.board}>
+        {Array.from({ length: 3 }).map((_, row) => (
+          <View key={row} style={styles.boardRow}>
+            {Array.from({ length: 3 }).map((_, col) => {
+              const i = row * 3 + col;
+              return (
+                <Square
+                  key={i}
+                  value={squares[i]}
+                  highlight={winningLine?.includes(i)}
+                  onPress={() => handlePress(i)}
+                />
+              );
+            })}
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
@@ -137,7 +139,7 @@ export default function Game() {
     <View style={styles.container}>
       <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       <View style={styles.gameInfo}>
-        <ScrollView>{sortedMoves}</ScrollView>
+        <ScrollView style={styles.moveList}>{sortedMoves}</ScrollView>
         <Pressable onPress={() => setAscending((value) => !value)}>
           <Text style={styles.sortButton}>
             {ascending ? "Sort descending" : "Sort ascending"}
@@ -152,11 +154,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 48,
+    paddingBottom: 24,
   },
   status: {
     fontSize: 20,
     marginBottom: 16,
+    textAlign: "center",
+  },
+  board: {
+    width: 60 * 3,
   },
   boardRow: {
     flexDirection: "row",
@@ -176,7 +183,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fde68a",
   },
   gameInfo: {
+    flex: 1,
+    alignSelf: "stretch",
+    paddingHorizontal: 24,
     marginTop: 16,
+  },
+  moveList: {
+    flexGrow: 0,
   },
   move: {
     fontSize: 16,
