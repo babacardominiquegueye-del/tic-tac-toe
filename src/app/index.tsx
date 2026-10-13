@@ -100,8 +100,18 @@ export default function Game() {
     setCurrentMove(move);
   }
 
-  const moves = history.map((_, move) => {
-    const description = move > 0 ? `Go to move #${move}` : "Go to game start";
+  const moves = history.map((squares, move) => {
+    let description;
+    if (move > 0) {
+      const index = squares.findIndex(
+        (value, i) => value !== history[move - 1][i]
+      );
+      const col = index % 3;
+      const row = Math.floor(index / 3);
+      description = `Go to move #${move} (${col}, ${row})`;
+    } else {
+      description = "Go to game start";
+    }
     return (
       <Pressable key={move} onPress={() => jumpTo(move)}>
         <Text style={styles.move}>{description}</Text>
