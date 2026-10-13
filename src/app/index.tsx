@@ -85,6 +85,7 @@ export default function Game() {
     Array(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [ascending, setAscending] = useState(true);
 
   const currentSquares = history[currentMove];
   const xIsNext = currentMove % 2 === 0;
@@ -120,11 +121,18 @@ export default function Game() {
     );
   });
 
+  const sortedMoves = ascending ? moves : [...moves].reverse();
+
   return (
     <View style={styles.container}>
       <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       <View style={styles.gameInfo}>
-        <ScrollView>{moves}</ScrollView>
+        <ScrollView>{sortedMoves}</ScrollView>
+        <Pressable onPress={() => setAscending((value) => !value)}>
+          <Text style={styles.sortButton}>
+            {ascending ? "Sort descending" : "Sort ascending"}
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -164,5 +172,11 @@ const styles = StyleSheet.create({
   },
   currentMove: {
     fontWeight: "bold",
+  },
+  sortButton: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#16a34a",
+    paddingVertical: 8,
   },
 });
