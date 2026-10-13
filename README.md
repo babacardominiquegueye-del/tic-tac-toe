@@ -1,44 +1,42 @@
-# Tic-Tac-Toe (Morpion)
+# Tic-Tac-Toe
 
-Une implémentation du jeu de morpion en **React Native / Expo**, adaptée du
-[tutoriel React](https://react.dev/learn/tutorial-tic-tac-toe) vers le mobile.
-Tout le jeu tient dans un seul écran : `src/app/index.tsx`.
+A React Native / Expo implementation of the tic-tac-toe game, adapted from the
+[React tutorial](https://react.dev/learn/tutorial-tic-tac-toe) for mobile.
+The whole game lives in a single screen: `src/app/index.tsx`.
 
-## Fonctionnalités
+## Features
 
-- Plateau 3 × 3 de composants `Square`
-- Partie complète : tours alternés `X` / `O`, impossible d'écraser une case déjà jouée
-- Détection du gagnant
-- Message d'égalité (**Draw**) quand plus personne ne peut gagner
-- Historique des coups avec voyage dans le temps (revenir à n'importe quel coup)
-- Position de chaque coup affichée au format `(colonne, ligne)`
-- Coup courant en gras dans l'historique
-- Surlignage des trois cases gagnantes
-- Bouton pour trier la liste des coups en ordre croissant / décroissant
+- 3 × 3 board of `Square` components
+- Full game: alternating `X` / `O` turns, no overwriting an already played square
+- Winner detection
+- **Draw** message when no one can win anymore
+- Move history with time travel (jump back to any move)
+- Location of each move shown as `(column, row)`
+- Current move highlighted in bold
+- Winning squares highlighted
+- Button to sort the move list ascending / descending
 
-## Prérequis
+## Prerequisites
 
 - [Node.js](https://nodejs.org) (LTS)
-- L'application [Expo Go](https://expo.dev/go) sur ton téléphone, ou un
-  émulateur Android / simulateur iOS
+- The [Expo Go](https://expo.dev/go) app on your phone, or an Android emulator / iOS simulator
 
-## Lancer le projet
+## Getting started
 
 ```bash
 npm install
 npx expo start
 ```
 
-Scanne ensuite le QR code avec Expo Go, ou appuie sur `a` (Android), `i` (iOS)
-ou `w` (web) dans le terminal.
+Then scan the QR code with Expo Go, or press `a` (Android), `i` (iOS) or `w` (web) in the terminal.
 
-Pour vider le cache Metro :
+To clear the Metro cache:
 
 ```bash
 npx expo start -c
 ```
 
-## Vérifications
+## Checks
 
 ```bash
 npx tsc --noEmit   # typecheck
@@ -50,14 +48,14 @@ npx expo lint      # lint
 ```
 src/
   app/
-    _layout.tsx    # navigateur Expo Router (Stack)
-    index.tsx      # écran unique : Square, Board et Game
+    _layout.tsx    # Expo Router navigator (Stack)
+    index.tsx      # single screen: Square, Board and Game
 ```
 
-> Le dossier `example/` est un template Expo inutilisé, laissé de côté.
+> The `example/` folder is an unused Expo template, left aside.
 
 ## Stack
 
 - [Expo](https://docs.expo.dev/) (SDK 57)
-- [Expo Router](https://docs.expo.dev/router/introduction/) pour la navigation
-- TypeScript avec `type SquareValue = "X" | "O" | null`
+- [Expo Router](https://docs.expo.dev/router/introduction/) for navigation
+- TypeScript with `type SquareValue = "X" | "O" | null`
